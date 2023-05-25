@@ -13,6 +13,7 @@ const authSlice = createSlice({
         gender: "",
         password: "",
         uuid: "",
+        account_number: "",
     },
 
     reducers: {
@@ -25,6 +26,7 @@ const authSlice = createSlice({
             state.birth = action.payload.birth;
             state.gender = action.payload.gender;
             state.uuid = action.payload.uuid;
+            state.account_number = action.payload.account_number;
         },
         logoutAction: (state) => {
             state.name = "";
@@ -36,6 +38,7 @@ const authSlice = createSlice({
             state.gender = "";
             state.password = "";
             state.uuid = "";
+            state.account_number = "";
         },
         loginActionGoogle: (state, action) => {
             const { getuser } = action.payload;

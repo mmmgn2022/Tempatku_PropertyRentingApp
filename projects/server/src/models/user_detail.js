@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     gender: DataTypes.ENUM('Male', 'Female'),
     image_profile: DataTypes.STRING,
     image_ktp: DataTypes.BLOB,
-    userId: DataTypes.INTEGER
+    userId: DataTypes.INTEGER,
+    account_number: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'user_detail',

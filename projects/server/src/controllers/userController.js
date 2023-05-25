@@ -72,11 +72,11 @@ module.exports = {
             hbs({
               viewEngine: {
                 extname: ".html", // html extension
-                layoutsDir: join(__dirname,"../helper"), // location of handlebars templates
+                layoutsDir: join(__dirname, "../helper"), // location of handlebars templates
                 defaultLayout: "register-verification-email", // name of main template
-                partialsDir: join(__dirname,"../helper"), // location of your subtemplates
+                partialsDir: join(__dirname, "../helper"), // location of your subtemplates
               },
-              viewPath: join(__dirname,"../helper"),
+              viewPath: join(__dirname, "../helper"),
               extName: ".html",
             })
           );
@@ -154,7 +154,8 @@ module.exports = {
             );
             let { id, uuid, email, phone, isSuspended, attempts, isVerified } =
               getuser[0].dataValues;
-            let { name, birth, gender, image_profile } = getuser[0].user_detail;
+            let { name, birth, gender, image_profile, account_number } =
+              getuser[0].user_detail;
             let role = getuser[0].dataValues.role.role;
             // generate token
             let token = createToken({ id, role, isSuspended }, "24h");
@@ -172,7 +173,8 @@ module.exports = {
               image_profile,
               gender,
               birth,
-              uuid
+              uuid,
+              account_number,
             });
           } else {
             //jika salah passwordnya attempt + 1 sampe 5 kali nanti akun suspended
@@ -238,7 +240,8 @@ module.exports = {
       });
       let { id, uuid, email, phone, isSuspended, isVerified } =
         getuser[0].dataValues;
-      let { name, birth, gender, image_profile } = getuser[0].user_detail;
+      let { name, birth, gender, image_profile, account_number } =
+        getuser[0].user_detail;
       let role = getuser[0].dataValues.role.role;
       // generate token
       let token = createToken({ id, role, isSuspended }, "24h");
@@ -255,7 +258,8 @@ module.exports = {
         image_profile,
         gender,
         birth,
-        uuid
+        uuid,
+        account_number,
       });
     } catch (error) {
       console.log(error);
@@ -277,7 +281,7 @@ module.exports = {
       if (getData.length > 0) {
         let comparecurrentpw = bcrypt.compareSync(
           req.body.password,
-          getData[0].dataValues.password  //currentpw
+          getData[0].dataValues.password //currentpw
         );
         if (comparecurrentpw) {
           // compare newpassword & confirmationpassword
@@ -377,11 +381,11 @@ module.exports = {
           hbs({
             viewEngine: {
               extname: ".html", // html extension
-              layoutsDir: join(__dirname,"../helper"), // location of handlebars templates
+              layoutsDir: join(__dirname, "../helper"), // location of handlebars templates
               defaultLayout: "reset-password-email", // name of main template
-              partialsDir: join(__dirname,"../helper"), // location of your subtemplates
+              partialsDir: join(__dirname, "../helper"), // location of your subtemplates
             },
-            viewPath: join(__dirname,"../helper"),
+            viewPath: join(__dirname, "../helper"),
             extName: ".html",
           })
         );
@@ -663,11 +667,11 @@ module.exports = {
             hbs({
               viewEngine: {
                 extname: ".html", // html extension
-                layoutsDir: join(__dirname,"../helper"), // location of handlebars templates
+                layoutsDir: join(__dirname, "../helper"), // location of handlebars templates
                 defaultLayout: "account-verification-email", // name of main template
-                partialsDir: join(__dirname,"../helper"), // location of your subtemplates
+                partialsDir: join(__dirname, "../helper"), // location of your subtemplates
               },
-              viewPath: join(__dirname,"../helper"),
+              viewPath: join(__dirname, "../helper"),
               extName: ".html",
             })
           );
@@ -687,7 +691,7 @@ module.exports = {
             success: true,
             message: `You received an email to verify your account. Please check your email.
               OTP sent today : ${otpCount + 1}.`,
-            checkverifieduser, 
+            checkverifieduser,
           });
         } else {
           res.status(400).send({
@@ -711,7 +715,7 @@ module.exports = {
   //10. EDIT PROFILE
   editProfile: async (req, res, next) => {
     try {
-      const { name, email, birth, gender } = req.body;
+      const { name, email, birth, gender, account_number } = req.body;
       if (name || email || birth || gender) {
         await model.user.update(
           { email },
@@ -722,7 +726,7 @@ module.exports = {
           }
         );
         await model.user_detail.update(
-          { name, birth, gender },
+          { name, birth, gender, account_number },
           {
             where: {
               userId: req.decrypt.id,

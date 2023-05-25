@@ -231,6 +231,16 @@ module.exports = {
             .withMessage("Birth year cannot be lower than 1900-01-01.")
             .run(req);
         }
+
+        if (req.body.account_number) {
+          await check("account_number")
+            .notEmpty()
+            .isLength({ min: 10, max: 20 })
+            .withMessage("Account number must be between 10 and 20 characters.")
+            .matches(/^\d+$/)
+            .withMessage("Account number must contain only digits.")
+            .run(req);
+        }
       }
 
       const validation = validationResult(req);
