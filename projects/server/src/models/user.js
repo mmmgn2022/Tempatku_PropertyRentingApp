@@ -11,30 +11,32 @@ module.exports = (sequelize, DataTypes) => {
             // define association here
         }
     }
-  
-  user.init(
-    {
-      uuid: DataTypes.STRING,
-      email: DataTypes.STRING,
-      password: DataTypes.STRING,
-      phone: DataTypes.STRING,
-      attempts: DataTypes.INTEGER,
-      isSuspended: DataTypes.BOOLEAN,
-      otpCount: DataTypes.INTEGER,
-      otpCountDate: DataTypes.DATEONLY,
-      otp: DataTypes.STRING,
-      isVerified: DataTypes.BOOLEAN,
-      isDeleted: DataTypes.BOOLEAN,
-      roleId: DataTypes.INTEGER,
-    },
-    {
-      sequelize,
-      modelName: "user",
-    }
-  );
-  user.associate = (models) => {
-    user.hasOne(models.user_detail, { foreignKey: "userId" });
-    user.belongsTo(models.role, { foreignKey: "roleId" });
-  };
-  return user;
+
+    user.init(
+        {
+            uuid: DataTypes.STRING,
+            email: DataTypes.STRING,
+            password: DataTypes.STRING,
+            phone: DataTypes.STRING,
+            attempts: DataTypes.INTEGER,
+            isSuspended: DataTypes.BOOLEAN,
+            otpCount: DataTypes.INTEGER,
+            otpCountDate: DataTypes.DATEONLY,
+            otp: DataTypes.STRING,
+            isVerified: DataTypes.BOOLEAN,
+            isDeleted: DataTypes.BOOLEAN,
+            roleId: DataTypes.INTEGER,
+        },
+        {
+            sequelize,
+            modelName: "user",
+        }
+    );
+    user.associate = (models) => {
+        user.hasOne(models.user_detail, { foreignKey: "userId" });
+        user.belongsTo(models.role, { foreignKey: "roleId" });
+        user.hasMany(models.property, { foreignKey: "userId" });
+        
+    };
+    return user;
 };

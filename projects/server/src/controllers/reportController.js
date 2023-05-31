@@ -19,12 +19,14 @@ module.exports = {
                 include: [
                     {
                         model: model.transaction,
+                        required: true,
                         where: {
                             transaction_statusId: 3,
                         },
                     },
                     {
                         model: model.room,
+                        required: true,
                         include: [
                             {
                                 model: model.property,
@@ -36,6 +38,7 @@ module.exports = {
                     },
                 ],
             });
+            console.log(get);
 
             res.status(200).send({
                 success: true,
@@ -81,12 +84,14 @@ module.exports = {
                 include: [
                     {
                         model: model.transaction,
+                        required: true,
                         where: {
                             transaction_statusId: 3,
                         },
                     },
                     {
                         model: model.room,
+                        required: true,
                         include: [
                             {
                                 model: model.property,
