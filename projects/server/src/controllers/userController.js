@@ -348,8 +348,8 @@ module.exports = {
         },
         include: [{ model: model.user_detail }],
       });
-      if (getData[0].dataValues.password !== "NULL") {
       if (getData.length > 0) {
+      if (getData[0].dataValues.password !== "NULL") {
         // create otp
         const otp = Math.floor(1000 + Math.random() * 9000);
         // patch otp di database user
@@ -439,7 +439,7 @@ module.exports = {
           req.body.newPassword = bcrypt.hashSync(req.body.newPassword, salt);
           // update the password & isSuspended
           await model.user.update(
-            { password: req.body.newPassword, isSuspended: 0 },
+            { password: req.body.newPassword, isSuspended: 0, attempts: 0 },
             {
               //read token
               where: {

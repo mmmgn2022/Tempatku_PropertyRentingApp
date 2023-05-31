@@ -48,11 +48,11 @@ export default function Navbar(props) {
     setModalIsOpen(false);
   };
 
-  React.useEffect(() => {
-    if (pathname === "/") {
-      onOpenModal();
-    }
-  }, [pathname]);
+  // React.useEffect(() => {
+  //   if (pathname === "/") {
+  //     onOpenModal();
+  //   }
+  // }, [pathname]);
 
   const onBtnLogout = () => {
     const cookieValue = document.cookie;
