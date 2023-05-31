@@ -53,7 +53,7 @@ export default function FilteredProperty() {
 
     const [showProducts, setShowProducts] = useState([]);
     const [page, setPage] = useState(1);
-    const [size, setSize] = useState(10);
+    const [size, setSize] = useState(12);
     const [productName, setProductName] = useState("");
     const [totalData, setTotalData] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
