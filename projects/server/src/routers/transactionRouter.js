@@ -1,7 +1,7 @@
 const { transactionController } = require('../controllers');
 const { readToken } = require('../helper/jwt');
 const route = require('express').Router();
-const uploader = require('../helper/uploader');
+const uploader = require('../helper/uploader3');
 
 route.post('/',
     readToken,
@@ -12,7 +12,5 @@ route.patch('/status', readToken, transactionController.updateTransactionStatus)
 route.patch('/reject', readToken, transactionController.rejectTransaction)
 route.patch('/confirm', readToken, transactionController.confirmTransaction)
 
-
-route.get('/testget', transactionController.testGet)
 
 module.exports = route;

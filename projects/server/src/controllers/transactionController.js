@@ -143,6 +143,7 @@ module.exports = {
                 subject: "Payment Guidelines for Your Booking",
                 template: "payment-guidelines",
                 context: data,
+                priority: 'high'
             });
 
 
@@ -182,6 +183,7 @@ module.exports = {
                         subject: "Your order has been cancelled",
                         template: "cancel-payment",
                         context: data,
+                        priority: 'high'
                     });
                     console.log("transaction status di ubah ke canceled karena tidak membayar")
                 }
@@ -265,8 +267,8 @@ module.exports = {
                     uuid: req.params.uuid
                 }
             });
-            if (fs.existsSync(`./src/public${get[0].dataValues.image_payment}`)) {
-                fs.unlinkSync(`./src/public${get[0].dataValues.image_payment}`);
+            if (fs.existsSync(join(__dirname, `../public${get[0].dataValues.image_payment}`))) {
+                fs.unlinkSync(join(__dirname, `../public${get[0].dataValues.image_payment}`));
             }
             res.status(200).send({
                 success: true,
@@ -358,6 +360,7 @@ module.exports = {
                 subject: "Your order has been cancelled",
                 template: "cancel-payment",
                 context: data,
+                priority: 'high'
             });
 
 
@@ -438,6 +441,7 @@ module.exports = {
                 subject: "Your order has been rejected",
                 template: "reject-payment",
                 context: data,
+                priority: 'high'
             });
 
             console.log("email terkirim");
@@ -476,6 +480,7 @@ module.exports = {
                         subject: "Your order has been cancelled",
                         template: "cancel-payment",
                         context: data,
+                        priority: 'high'
                     });
                     console.log("transaction status di ubah ke canceled karena tidak membayar")
                 }
@@ -630,6 +635,7 @@ module.exports = {
                         path: destinationPath,
                     },
                 ],
+                priority: 'high'
             });
 
             console.log("Send Pdf Success");
@@ -653,120 +659,4 @@ module.exports = {
         }
 
     },
-    testCron: async (req, res, next) => {
-        console.log(new Date().toISOString());
-        const checkinDate = new Date(`${2023 - 04 - 21}T04:00:00.147Z`); // req.body.start_date T 11.00AM WIB
-        const today = new Date();
-
-        // Calculate the difference in days between today and checkinDate
-        const timeDiff = checkinDate.getTime() - today.getTime();
-        const dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-
-        if (dayDiff <= 1) {
-            // Checkin date is today or tomorrow, so execute the function instantly
-            console.log('The world is going to end today.');
-        } else if (dayDiff == 2) {
-            // Checkin date is 2 days in the future, so schedule the function to execute 1 day before the checkin date
-            const prevDay = new Date(checkinDate.getTime() - (24 * 60 * 60 * 1000));
-            const task = schedule.scheduleJob(prevDay, async function () {
-                let update = await model.transaction.update({ transaction_statusId: 1 }, {
-                    where: {
-                        uuid: req.body.uuid
-                    }
-                })
-            });
-            task.once('run', () => {
-                console.log('task ran once, cancelling schedule');
-                task.cancel();
-            });
-        } else {
-            // Checkin date is more than 2 days in the future, so schedule the function to execute on the checkin date
-            const task = schedule.scheduleJob(checkinDate, function () {
-                console.log('The world is going to end on ' + checkinDate.toDateString());
-            });
-            task.once('run', () => {
-                console.log('task ran once, cancelling schedule');
-                task.cancel();
-            });
-        }
-
-
-        // const date = new Date("2023-04-21T19:37:00.147Z");
-
-        // const job = schedule.scheduleJob(date, function () {
-        //     console.log('The world is going to end today.');
-        // });
-
-        task.once('run', () => {
-            console.log('task ran once, cancelling schedule');
-            task.cancel();
-        });
-    },
-    testGet: async (req, res, next) => {
-        try {
-            // let get = await model.transaction.findOne({
-            //     where: {
-            //         id: 9
-            //     },
-            //     attributes: ['uuid'],
-            //     include: [
-            //         {
-            //             model: model.order, attributes: ['start_date', 'end_date', 'price'],
-            //             include: [
-            //                 {
-            //                     model: model.room, attributes: ['uuid', 'propertyId'],
-            //                     include: [
-            //                         { model: model.property, attributes: ['property'] }, // propertyName 
-            //                         { model: model.room_category, attributes: ['name'] }, // roomName
-            //                     ]
-            //                 },
-            //             ]
-            //         },
-            //         {
-            //             model: model.user, attributes: ['uuid'],
-            //             include: [
-            //                 { model: model.user_detail, attributes: ['name'] }
-            //             ]
-            //         }
-            //     ]
-            // });
-            // res.send(get)
-
-            let orders = await model.order.findAll({
-                attributes: ['start_date', 'end_date', 'price'],
-                where: {
-                    start_date: '2023-05-03'
-                },
-                include: [
-                    {
-                        model: model.transaction, attributes: ['invoice_number'], // invoice number
-                        include: [
-                            {
-                                model: model.user, attributes: ['email'], // email customer
-                                include: [
-                                    { model: model.user_detail, attributes: ['name'] } // customer name
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        model: model.room, attributes: ['uuid'],
-                        include: [
-                            { model: model.room_category, attributes: ['name'] }, // room name
-                            { model: model.property, attributes: ['property'] } // property name
-                        ]
-                    }
-                ]
-            })
-            res.send(orders)
-        } catch (error) {
-            console.log(error);
-            next(error);
-        }
-    },
-    testSchedule: async (req, res, next) => {
-        const nextDay = new Date()
-        nextDay.setDate(nextDay.getDate() + 1);
-
-    }
 }

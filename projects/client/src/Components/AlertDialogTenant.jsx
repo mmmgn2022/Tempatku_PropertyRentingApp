@@ -20,17 +20,21 @@ export default function AlertDialogTenant(props) {
     const cancelRef = React.useRef()
 
     const updateTransactionStatus = async () => {
-        setLoadingButton(true)
-        let update = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/transaction/status`, {
-            transaction_statusId: 5, // 5 = cancel
-            uuid: props.uuidTransaction
-        }, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-        props.getSummary()
-        setLoadingButton(false)
+        try {
+            setLoadingButton(true)
+            let update = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/transaction/status`, {
+                transaction_statusId: 5, // 5 = cancel
+                uuid: props.uuidTransaction
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            props.getSummary()
+            setLoadingButton(false)
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const handleCancel = () => {

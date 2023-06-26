@@ -9,7 +9,7 @@ import {
     Stack,
     Image,
     FormErrorMessage,
-    Text, Icon, HStack, Box, Center, Card, CardBody, InputGroup, InputRightElement, useToast
+    Text, Icon, HStack, Box, Center, Card, CardBody, InputGroup, InputRightElement, useToast, InputLeftElement
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
@@ -19,20 +19,18 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import tenantRegisterBanner from "../assets/tenant-register-banner.webp";
 import Loading from "../Components/Loading";
-
+import noimage from "../assets/noimage.png";
 
 export default function TenantRegister() {
     const [loadingPage, setLoadingPage] = useState(true);
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
     const navigate = useNavigate();
-    const [fileImage, setFileImage] = useState(null);  //state for idcard
     const inputFile = useRef(null);
-    const [image, setImage] = useState("https://fakeimg.pl/350x200/");
+    const [image, setImage] = useState(noimage);
     const [loading, setLoading] = React.useState(false);
     const toast = useToast();
 
-    console.log("isi fileimage: ", fileImage);
     const onBtnRegister = async () => {
         try {
             setLoading(true);
@@ -53,7 +51,6 @@ export default function TenantRegister() {
                 });
             const fileBase64 = await toBase64(formik.values.fileImage);
             formData.append("images", fileBase64);
-            console.log("ini isi dari formData", formData);
             if (!formik.isValid) {
                 return;
             }
@@ -160,7 +157,6 @@ export default function TenantRegister() {
 
     //untuk upload ktp
     const onChangeFile = (event) => {
-        console.log("ini isi dari event.target.files onchangefile :", event.target.files);
         formik.setFieldValue(event.target.name, event.target.files[0]);
     };
 
@@ -302,28 +298,24 @@ export default function TenantRegister() {
                                     borderRadius="8px 8px 0 0"
                                     border="1px solid #CBD5E0"
                                 />
-                                <Button fontFamily={"heading"} bg={"gray.200"} color={"gray.800"} w="full"
-                                    leftIcon={<Icon as={FiUpload} ml={{ base: "4", sm: "8" }} fontSize={"2xl"} />}
-                                    variant={"link"}
-                                    onClick={() =>
-                                        inputFile.current.click()
-                                    }
+                                 <InputGroup w="full">
+                                <InputLeftElement pointerEvents="none" children={<Icon as={FiUpload} color="black" ml={{ base: "6", sm: "10" }} mt={"5"} fontSize={"2xl"}  />} />
+                                {/* Upload your id card */}
+                                <Input
+                                    py="4"
+                                    pl={{ base: "16", sm: "20" }}
+                                    type="file"
+                                    id="file"
+                                    ref={inputFile}
+                                    onChange={onChangeFile}
+                                    accept="image/*"
+                                    variant="unstyled"
+                                    name="fileImage"
+                                    bg={"gray.200"} color={"gray.800"}
                                     borderRadius="0 0 8px 8px"
-                                >
-                                    {/* Upload your id card */}
-                                    <Input
-                                        my="4"
-                                        ml={{ base: "3", sm: "6" }}
-                                        type="file"
-                                        id="file"
-                                        ref={inputFile}
-                                        onChange={onChangeFile}
-                                        accept="image/*"
-                                        variant="unstyled"
-                                        name="fileImage"
-                                        p="1"
-                                    ></Input>
-                                </Button>
+                                    textAlign={'center'}
+                                ></Input>
+                                </InputGroup>
                                 <FormErrorMessage fontSize="xs" style={{ position: "absolute", top: "100%", marginTop: "0.30rem" }}>{formik.errors.fileImage}</FormErrorMessage>
                             </FormControl>
                         </Stack>

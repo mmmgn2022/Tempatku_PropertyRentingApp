@@ -32,7 +32,7 @@ export default function SwiperCarousel(props) {
                 {props?.pictureProperty?.map((val, idx) => {
                     return (
                         <SwiperSlide>
-                            <img
+                            <img style={{ width: '650px', height: '435px' }}
                                 src={`${process.env.REACT_APP_API_IMG_URL}${val.picture}`}
                             />
                         </SwiperSlide>
@@ -41,7 +41,7 @@ export default function SwiperCarousel(props) {
                 {props?.pictureRoom?.map((val, idx) => {
                     return (
                         <SwiperSlide>
-                            <img
+                            <img style={{ width: '650px', height: '435px' }}
                                 src={`${process.env.REACT_APP_API_IMG_URL}${val.picture}`}
                             />
                         </SwiperSlide>
@@ -61,7 +61,7 @@ export default function SwiperCarousel(props) {
                 {props?.pictureProperty?.map((val, idx) => {
                     return (
                         <SwiperSlide>
-                            <img
+                            <img style={{ width: '160px', height: '110px' }}
                                 src={`${process.env.REACT_APP_API_IMG_URL}${val.picture}`}
                             />
                         </SwiperSlide>
@@ -70,7 +70,7 @@ export default function SwiperCarousel(props) {
                 {props?.pictureRoom?.map((val, idx) => {
                     return (
                         <SwiperSlide>
-                            <img
+                            <img style={{ width: '160px', height: '110px' }}
                                 src={`${process.env.REACT_APP_API_IMG_URL}${val.picture}`}
                             />
                         </SwiperSlide>

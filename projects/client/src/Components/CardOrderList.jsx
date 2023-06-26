@@ -84,6 +84,7 @@ export default function CardOrderList(props) {
                                     size='md'
                                     resize='none'
                                     onChange={(e) => props.setReview(e.target.value)}
+                                    maxLength={60}
                                 />
                                 <Flex alignSelf={'start'} py='1'>
                                     <Flex alignItems={'center'}>

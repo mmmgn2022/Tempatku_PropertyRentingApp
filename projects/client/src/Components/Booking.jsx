@@ -47,7 +47,8 @@ export default function Booking(props) {
             <Box
                 rounded={'lg'}
                 p={8}
-                w={{ sm: '150px', md: '450px' }}
+                maxW={{ sm: '150px', md: '450px' }}
+                // overflow='hidden'
                 border='1px'
                 borderColor={'gray.300'}
             >
@@ -61,6 +62,8 @@ export default function Booking(props) {
                                     borderRadius="md"
                                     py="1"
                                     pl='4'
+                                    overflow='hidden'
+                                    width={{base:'45', sm:"40"}}
                                 >
                                     <DatePicker
                                         selected={!props.inputCheckIn ? currentDate : new Date(props.inputCheckIn)}
@@ -79,7 +82,10 @@ export default function Booking(props) {
                                 <Box border="1px"
                                     borderColor='gray.300'
                                     borderRadius="md"
-                                    py="1" pl='4'>
+                                    py="1" pl='4'
+                                    overflow='hidden'
+                                    width={{base:'45', sm:"40"}}
+                                    >
                                     <DatePicker
                                         selected={!props.inputCheckOut ? new Date(currentDate).getTime() + 24 * 60 * 60 * 1000 : new Date(props.inputCheckOut)}
                                         onChange={(date) => props.setInputCheckOut(new Date(date).toISOString().split('T')[0])}

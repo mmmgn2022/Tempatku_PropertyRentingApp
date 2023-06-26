@@ -1,0 +1,16 @@
+.container-fp {
+  padding: 0 7%;
+}
+
+.property-fp {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-row-gap: 30px;
+  margin-bottom: 30px;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.property-fp div {
+  position: relative;
+}

@@ -140,6 +140,7 @@ module.exports = {
             let del = await model.maintenance.update(
                 {
                     isDeleted: true,
+                    isActive: false,
                 },
                 {
                     where: {

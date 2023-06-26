@@ -152,6 +152,7 @@ module.exports = {
             let del = await model.special_price.update(
                 {
                     isDeleted: true,
+                    isActive: false,
                 },
                 {
                     where: {

@@ -37,14 +37,16 @@ function ManageProperty(props) {
     const [loading, setLoading] = useState(false);
 
     const [propertyData, setPropertyData] = useState(null);
-    const [category, setCategory] = useState(null);
+    const [category, setCategory] = useState(propertyData?.category?.category);
     const [property, setProperty] = useState(propertyData?.property);
     const [description, setDescription] = useState(propertyData?.description);
     const [descriptionLength, setDescriptionLength] = useState(0);
     const [address, setAddress] = useState(
         propertyData?.property_location?.address
     );
-    const [province, setProvince] = useState(null);
+    const [province, setProvince] = useState(
+        propertyData?.property_location?.provinceId
+    );
     const [regency, setRegency] = useState(null);
     const [zipcode, setZipcode] = useState(
         propertyData?.property_location?.zip
@@ -281,9 +283,9 @@ function ManageProperty(props) {
                     description: description,
                     address: address,
                     zipcode: zipcode,
-                    country: country,
+                    provinceId: province.value,
                     regencyId: regency,
-                    provinceId: province,
+                    country: country,
                     gmaps: mapsUrl,
                 },
                 {
@@ -704,7 +706,7 @@ function ManageProperty(props) {
                                                                         ) => {
                                                                             onChangeFile1(
                                                                                 event,
-                                                                                filePropertyEdit1.id
+                                                                                filePropertyEdit1?.id
                                                                             );
                                                                         }}
                                                                     />
@@ -799,7 +801,7 @@ function ManageProperty(props) {
                                                                 ) => {
                                                                     onChangeFile1(
                                                                         event,
-                                                                        filePropertyEdit1.id
+                                                                        filePropertyEdit1?.id
                                                                     );
                                                                 }}
                                                             />
@@ -878,7 +880,7 @@ function ManageProperty(props) {
                                                                         ) => {
                                                                             onChangeFile2(
                                                                                 event,
-                                                                                filePropertyEdit2.id
+                                                                                filePropertyEdit2?.id
                                                                             );
                                                                         }}
                                                                     />
@@ -973,7 +975,7 @@ function ManageProperty(props) {
                                                                 ) => {
                                                                     onChangeFile2(
                                                                         event,
-                                                                        filePropertyEdit2.id
+                                                                        filePropertyEdit2?.id
                                                                     );
                                                                 }}
                                                             />
@@ -1051,7 +1053,7 @@ function ManageProperty(props) {
                                                                         ) => {
                                                                             onChangeFile3(
                                                                                 event,
-                                                                                filePropertyEdit3.id
+                                                                                filePropertyEdit3?.id
                                                                             );
                                                                         }}
                                                                     />
@@ -1146,7 +1148,7 @@ function ManageProperty(props) {
                                                                 ) => {
                                                                     onChangeFile3(
                                                                         event,
-                                                                        filePropertyEdit3.id
+                                                                        filePropertyEdit3?.id
                                                                     );
                                                                 }}
                                                             />
@@ -1224,7 +1226,7 @@ function ManageProperty(props) {
                                                                         ) => {
                                                                             onChangeFile4(
                                                                                 event,
-                                                                                filePropertyEdit4.id
+                                                                                filePropertyEdit4?.id
                                                                             );
                                                                         }}
                                                                     />
@@ -1319,7 +1321,7 @@ function ManageProperty(props) {
                                                                 ) => {
                                                                     onChangeFile4(
                                                                         event,
-                                                                        filePropertyEdit4.id
+                                                                        filePropertyEdit4?.id
                                                                     );
                                                                 }}
                                                             />
@@ -1397,7 +1399,7 @@ function ManageProperty(props) {
                                                                         ) => {
                                                                             onChangeFile5(
                                                                                 event,
-                                                                                filePropertyEdit5.id
+                                                                                filePropertyEdit5?.id
                                                                             );
                                                                         }}
                                                                     />
@@ -1492,7 +1494,7 @@ function ManageProperty(props) {
                                                                 ) => {
                                                                     onChangeFile5(
                                                                         event,
-                                                                        filePropertyEdit5.id
+                                                                        filePropertyEdit5?.id
                                                                     );
                                                                 }}
                                                             />

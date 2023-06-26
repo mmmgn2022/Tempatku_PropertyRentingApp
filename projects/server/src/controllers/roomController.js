@@ -3,6 +3,8 @@ const model = require("../models");
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
 const { createToken } = require("../helper/jwt");
+const fs = require("fs");
+const { join } = require("path");
 
 module.exports = {
     getPropertyNameAndIdByUserId: async (req, res, next) => {
@@ -191,7 +193,7 @@ module.exports = {
                         id: req.query.id,
                     },
                 });
-                
+
                 let update = await model.picture_room.update(
                     {
                         picture: `/ImgRoom/${req.files[0].filename}`,
@@ -202,8 +204,14 @@ module.exports = {
                         },
                     }
                 );
-                if (fs.existsSync(`./src/public${get[0].dataValues.picture}`)) {
-                    fs.unlinkSync(`./src/public${get[0].dataValues.picture}`);
+                if (
+                    fs.existsSync(
+                        join(__dirname, `../public${get[0].dataValues.picture}`)
+                    )
+                ) {
+                    fs.unlinkSync(
+                        join(__dirname, `../public${get[0].dataValues.picture}`)
+                    );
                 }
             } else {
                 let add = await model.picture_room.create({
@@ -221,16 +229,25 @@ module.exports = {
     },
     deleteRoomPicture: async (req, res, next) => {
         try {
-            let del = await model.picture_room.update(
-                {
-                    isDeleted: 1,
+            let get = await model.picture_room.findAll({
+                where: {
+                    id: req.query.id,
                 },
-                {
-                    where: {
-                        id: req.query.id,
-                    },
-                }
-            );
+            });
+            let del = await model.picture_room.destroy({
+                where: {
+                    id: req.query.id,
+                },
+            });
+            if (
+                fs.existsSync(
+                    join(__dirname, `../public${get[0].dataValues.picture}`)
+                )
+            ) {
+                fs.unlinkSync(
+                    join(__dirname, `../public${get[0].dataValues.picture}`)
+                );
+            }
             res.status(200).send({
                 success: true,
                 message: "Image Deleted",

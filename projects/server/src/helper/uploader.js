@@ -11,7 +11,6 @@ const uploader = (directory, filePreFix) => {
     destination: (req, file, cb) => {
       const storeDir = directory ? defaultDir + directory : defaultDir;
       if (fs.existsSync(storeDir)) {
-        console.log(`Directory ${storeDir} exist ✅`);
         cb(null, storeDir);
       } else {
         fs.mkdir(storeDir, { recursive: true }, (error) => {
@@ -23,14 +22,10 @@ const uploader = (directory, filePreFix) => {
       }
     },
     filename: (req, file, cb) => {
-      console.log("cek file original name :", file.originalname);
-      console.log("cek file  :", file);
       let ext =
         file.originalname.split(".")[file.originalname.split(".").length - 1];
-      console.log("check extension : ", ext);
 
       let newName = filePreFix + Date.now() + "." + ext;
-      console.log("New Name : ", newName);
       cb(null, newName);
     },
   });

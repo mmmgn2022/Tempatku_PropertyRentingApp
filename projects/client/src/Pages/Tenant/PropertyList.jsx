@@ -102,7 +102,7 @@ function PropertyList(props) {
     } else {
         return (
             <>
-                <Flex minH="93vh" w={"100%"}>
+                <Flex minH="93vh" maxW={"100vw"}>
                     <Box>
                         <Sidebar />
                     </Box>
@@ -146,6 +146,7 @@ function PropertyList(props) {
                                     New Property
                                 </Button>
                                 <Button
+                                    mr="4"
                                     color="#D3212D"
                                     variant={"outline"}
                                     w={"150px"}
@@ -155,17 +156,17 @@ function PropertyList(props) {
                                 </Button>
                             </Box>
                         </Flex>
-                        
+
                         {dataAllProperty.length ? (
                             <>
                                 <Box
-                                    w={"full"}
+                                    w={"100%"}
                                     h={"82.5vh"}
                                     display={"flex"}
                                     flexDir={"column"}
                                     justifyContent={"space-between"}
                                 >
-                                    <TableContainer>
+                                    <TableContainer overflowX={"auto"}>
                                         <Table
                                             variant="simple"
                                             color={"#EEEEEE"}

@@ -35,7 +35,6 @@ export default function Verification() {
         }
       }
       );
-      console.log("ini hasil response onbtnSendVerifyEmail :", response);
       toast({
         title: response.data.message,
         status: "success",
@@ -83,7 +82,6 @@ export default function Verification() {
           }
         }
       );
-      console.log("ini hasil response onbtnverify :", response);
       toast({
         title: response.data.message,
         status: "success",

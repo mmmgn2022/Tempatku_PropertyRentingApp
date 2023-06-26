@@ -48,12 +48,12 @@ module.exports = {
                                 model: model.property, attributes: ['property']
                             },
                             {
-                                model: model.picture_room, attributes: ['picture']
+                                model: model.picture_room, attributes: ['picture'], limit: 1
                             },
                         ]
                     }
                 ],
-                order: [[req.query.sortby || 'start_date', req.query.order || 'DESC']] // order by date or order id
+                order: [[req.query.sortby || 'id', req.query.order || 'DESC']] // order by date or order id
             });
             res.status(200).send({
                 data: get,

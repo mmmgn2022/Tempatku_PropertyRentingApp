@@ -5,28 +5,23 @@ import {
   Box,
   Flex,
   Avatar,
-  HStack,
-  Link, Image,
-  IconButton,
+  HStack, Image,
   Button,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
-  MenuDivider,
   useDisclosure, Spinner,
-  Stack, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, InputGroup, Input, InputRightElement
+  Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
-import { TbHomeHeart } from "react-icons/tb";
-import { AiOutlineSearch } from "react-icons/ai";
+import { HamburgerIcon } from "@chakra-ui/icons";
 import Login from "./Login";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../reducers/auth";
 import axios from "axios";
 import Logo from "../assets/logotempatku.png";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 
 export default function Navbar(props) {
@@ -53,16 +48,25 @@ export default function Navbar(props) {
     setModalIsOpen(false);
   };
 
-  React.useEffect(() => {
-    if (pathname === "/") {
-      onOpenModal();
-    }
-  }, [pathname]);
+  // React.useEffect(() => {
+  //   if (pathname === "/") {
+  //     onOpenModal();
+  //   }
+  // }, [pathname]);
 
   const onBtnLogout = () => {
-    localStorage.removeItem("tempatku_login");
-    dispatch(logoutAction());
-    navigate("/", { replace: true });
+    const cookieValue = document.cookie;
+    // Check if cookie exists, if login by google but register via website
+    if (cookieValue) {
+      document.cookie = "googleAuthToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      localStorage.removeItem("tempatku_login");
+      dispatch(logoutAction());
+      navigate("/", { replace: true });
+    } else {
+      localStorage.removeItem("tempatku_login");
+      dispatch(logoutAction());
+      navigate("/", { replace: true });
+    }
   };
 
   const onBtnLogoutGoogle = async () => {
@@ -261,7 +265,11 @@ export default function Navbar(props) {
                       <MenuItem onClick={() => navigate("/")}>Home</MenuItem>
                       <MenuItem onClick={() => navigate("/profile/edit")}>Profile</MenuItem>
                       <MenuItem onClick={() => navigate("/order/list")}>Bookings</MenuItem>
-
+                      {password != "NULL" ? (
+                        <div>
+                          <MenuItem onClick={() => navigate("/password/change")}>Change Password</MenuItem>
+                        </div>
+                      ) : null}
                       {password === "NULL" ? (
                         <div>
                           <MenuItem
@@ -270,8 +278,6 @@ export default function Navbar(props) {
                         </div>
                       ) : (
                         <div>
-
-                          <MenuItem onClick={() => navigate("/password/change")}>Change Password</MenuItem>
                           <MenuItem
                             onClick={onBtnLogout}
                           >Logout</MenuItem>

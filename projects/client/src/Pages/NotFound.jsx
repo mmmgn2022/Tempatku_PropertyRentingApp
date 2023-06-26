@@ -40,7 +40,7 @@ export default function NotFound() {
                         Page Not Found
                     </Text>
                     <Text mb={6} fontSize={{ base: "sm", sm: "lg" }}>
-                        The page you"re looking for does not seem to exist
+                        The page you're looking for does not seem to exist
                     </Text>
                     {
                         role == "User" ?

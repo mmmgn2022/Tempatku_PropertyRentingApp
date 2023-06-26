@@ -280,7 +280,7 @@ export default function RoomCard(props) {
                     </Box>
                 </Box>
                 <Modal isOpen={isOpen} onClose={onClose}>
-                    <ModalContent>
+                    <ModalContent maxH="700px" maxW="700px">
                         <ModalHeader>Picture Room</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>

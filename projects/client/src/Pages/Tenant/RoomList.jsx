@@ -104,7 +104,7 @@ function RoomList(props) {
     } else {
         return (
             <>
-                <Flex minH={"93vh"} w={"100%"}>
+                <Flex minH={"93vh"} maxW={"100vw"}>
                     <Box>
                         <Sidebar />
                     </Box>

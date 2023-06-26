@@ -43,15 +43,12 @@ export default function EditProfile(props) {
     const handleGenderChange = (value) => {
         setGender(value);
         formik.setFieldValue("gender", value);
-        console.log("ini isi value gender change:", value);
     }
 
     const handleBirthChange = (event) => {
         const selectedDate = event.target.value;
         setBirth(selectedDate);
         formik.setFieldValue("birth", selectedDate);
-        console.log("ini isi selectedDate:", selectedDate);
-        console.log("ini type data selectedDate:", typeof selectedDate);
     }
 
     const onBtnEditProfile = async () => {
@@ -216,10 +213,6 @@ export default function EditProfile(props) {
 
     //change state image profile
     const onChangeFile = (event) => {
-        console.log(
-            "ini isi dari event.target.files onchangefile :",
-            event.target.files
-        );
         modalProfileImage.onOpen();
         setProfileImage(event.target.files[0]);
     };
@@ -244,8 +237,6 @@ export default function EditProfile(props) {
                 );
             }
             formData.append("image_profile", profileImage);
-            console.log("ini isi dari formData", formData);
-            console.log("ini tipe dari image_profile :", profileImage.type)
             let response = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/user/update-profile-image`, formData,
                 {
                     headers: {
@@ -253,8 +244,6 @@ export default function EditProfile(props) {
                     },
                 }
             );
-            console.log("response onbtneditprofileimage :", response);
-            console.log("response onbtneditprofileimage message be :", response.data.message);
             toast({
                 title: response.data.message,
                 status: "success",

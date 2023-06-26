@@ -68,64 +68,79 @@ module.exports = {
 
     },
     getAllReview: async (req, res, next) => {
-        let getReview = await model.review.findAll({
-            attributes: ['review', 'rating', 'createdAt'],
-            include: [
-                {
-                    model: model.room, attributes: ['id'], required: true,
-                    include: [
-                        {
-                            model: model.property, attributes: ['property'],
-                            where: {
-                                uuid: req.query.uuid
+        try {
+            let getReview = await model.review.findAll({
+                attributes: ['review', 'rating', 'createdAt'],
+                include: [
+                    {
+                        model: model.room, attributes: ['id'], required: true,
+                        include: [
+                            {
+                                model: model.property, attributes: ['property'],
+                                where: {
+                                    uuid: req.query.uuid
+                                }
                             }
-                        }
-                    ]
-                },
-                {
-                    model: model.user, attributes: ['uuid'],
-                    include: [
-                        { model: model.user_detail, attributes: ['name', 'image_profile'] }
-                    ]
-                }
-            ]
-        })
-        res.send(getReview)
+                        ]
+                    },
+                    {
+                        model: model.user, attributes: ['uuid'],
+                        include: [
+                            { model: model.user_detail, attributes: ['name', 'image_profile'] }
+                        ]
+                    }
+                ]
+            })
+            res.send(getReview)
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
     },
     getAverage: async (req, res, next) => {
-        let getAvg = await model.review.findOne({
-            attributes: [[sequelize.fn('AVG', sequelize.col('rating')), 'avg_rating']],
-            include: [
-                {
-                    model: model.room, attributes: ['uuid'], required: true,
-                    include: [{
-                        model: model.property, attributes: ['property'], where: {
-                            uuid: req.query.uuid // pake uuid harusnya
-                        }
-                    }]
-                }
-            ]
-        })
-        console.log("average", getAvg.dataValues);
-        res.status(200).send(getAvg)
+        try {
+            let getAvg = await model.review.findOne({
+                attributes: [[sequelize.fn('AVG', sequelize.col('rating')), 'avg_rating']],
+                include: [
+                    {
+                        model: model.room, attributes: ['uuid'], required: true,
+                        include: [{
+                            model: model.property, attributes: ['property'], where: {
+                                uuid: req.query.uuid // pake uuid harusnya
+                            }
+                        }]
+                    }
+                ]
+            })
+            console.log("average", getAvg.dataValues);
+            res.status(200).send(getAvg)
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
     },
     countReview: async (req, res, next) => {
-        let get = await model.review.findAll({
-            attributes: [[sequelize.fn('COUNT', sequelize.col('review')), 'review']],
-            include: [
-                {
-                    model: model.room, attributes: ['uuid'],
-                    include: [
-                        {
-                            model: model.property, attributes: ['property'],
-                            where: {
-                                uuid: req.query.uuid
+        try {
+            let get = await model.review.findAll({
+                attributes: [[sequelize.fn('COUNT', sequelize.col('review')), 'review']],
+                include: [
+                    {
+                        model: model.room, attributes: ['uuid'],
+                        include: [
+                            {
+                                model: model.property, attributes: ['property'],
+                                where: {
+                                    uuid: req.query.uuid
+                                }
                             }
-                        }
-                    ]
-                }
-            ]
-        })
+                        ]
+                    }
+                ]
+            })
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
     }
 
 }

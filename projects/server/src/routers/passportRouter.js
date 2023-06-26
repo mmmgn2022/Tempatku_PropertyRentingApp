@@ -104,27 +104,14 @@ route.get(
     //If user exist
     if (req.user) {
       console.log("ini isi req.user google :", req.user[0]);
-      // console.log(
-      //   "ini isi id dari req.user google :",
-      //   req.user[0].dataValues.id
-      // );
-      // console.log(
-      //   "ini isi role id dari req.user google :",
-      //   req.user[0].dataValues.roleId
-      // );
       let { id, roleId } = req.user[0].dataValues;
       const googleAuthToken = createToken({ id, roleId }, "24h");
-      // console.log(
-      //   "ini isi dari googleAuthToken sblm jadi cookie :",
-      //   googleAuthToken
-      // );
       res.cookie("googleAuthToken", googleAuthToken, {
         expires: new Date(Date.now() + 86400 * 1000),
         // httpOnly: true,
         sameSite: "None",
         secure: true,
       });
-      // console.log("Cookie created di google callback:", req.cookies.googleAuthToken);
       res.redirect(process.env.FE_URL);
     }
   }
@@ -136,11 +123,6 @@ route.get("/login/success", async (req, res, next) => {
   if (googleAuthToken) {
     try {
       const decrypt = jwt.verify(googleAuthToken, process.env.JWT_SECRET_TOKEN);
-      // console.log("ini isi dari decrypt googleAuthToken :", decryptGoogle);
-      // console.log(
-      //   "ini isi dari decrypt googleAuthToken :",
-      //   decrypt
-      // );
       let getuser = await model.user.findAll({
         where: { id: decrypt.id },
         include: [

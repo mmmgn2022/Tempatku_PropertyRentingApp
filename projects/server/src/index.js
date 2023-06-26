@@ -7,7 +7,6 @@ const cookieSession = require("cookie-session");
 const passport = require("passport");
 const cookieParser = require('cookie-parser');
 
-// console.log("isi dari __dirname :" + __dirname);
 const PORT = process.env.PORT || 2341;
 const app = express();
 app.use(express.json());

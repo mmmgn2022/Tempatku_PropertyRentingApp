@@ -429,7 +429,7 @@ function ManageRoom(props) {
                                                                         ) => {
                                                                             onChangeFile1(
                                                                                 event,
-                                                                                fileRoomEdit1.id
+                                                                                fileRoomEdit1?.id
                                                                             );
                                                                         }}
                                                                     />
@@ -524,7 +524,7 @@ function ManageRoom(props) {
                                                                 ) => {
                                                                     onChangeFile1(
                                                                         event,
-                                                                        fileRoomEdit1.id
+                                                                        fileRoomEdit1?.id
                                                                     );
                                                                 }}
                                                             />
@@ -603,7 +603,7 @@ function ManageRoom(props) {
                                                                         ) => {
                                                                             onChangeFile2(
                                                                                 event,
-                                                                                fileRoomEdit2.id
+                                                                                fileRoomEdit2?.id
                                                                             );
                                                                         }}
                                                                     />
@@ -698,7 +698,7 @@ function ManageRoom(props) {
                                                                 ) => {
                                                                     onChangeFile2(
                                                                         event,
-                                                                        fileRoomEdit2.id
+                                                                        fileRoomEdit2?.id
                                                                     );
                                                                 }}
                                                             />
@@ -776,7 +776,7 @@ function ManageRoom(props) {
                                                                         ) => {
                                                                             onChangeFile3(
                                                                                 event,
-                                                                                fileRoomEdit3.id
+                                                                                fileRoomEdit3?.id
                                                                             );
                                                                         }}
                                                                     />
@@ -871,7 +871,7 @@ function ManageRoom(props) {
                                                                 ) => {
                                                                     onChangeFile3(
                                                                         event,
-                                                                        fileRoomEdit3.id
+                                                                        fileRoomEdit3?.id
                                                                     );
                                                                 }}
                                                             />
@@ -949,7 +949,7 @@ function ManageRoom(props) {
                                                                         ) => {
                                                                             onChangeFile4(
                                                                                 event,
-                                                                                fileRoomEdit4.id
+                                                                                fileRoomEdit4?.id
                                                                             );
                                                                         }}
                                                                     />
@@ -1044,7 +1044,7 @@ function ManageRoom(props) {
                                                                 ) => {
                                                                     onChangeFile4(
                                                                         event,
-                                                                        fileRoomEdit4.id
+                                                                        fileRoomEdit4?.id
                                                                     );
                                                                 }}
                                                             />
@@ -1122,7 +1122,7 @@ function ManageRoom(props) {
                                                                         ) => {
                                                                             onChangeFile5(
                                                                                 event,
-                                                                                fileRoomEdit5.id
+                                                                                fileRoomEdit5?.id
                                                                             );
                                                                         }}
                                                                     />
@@ -1217,7 +1217,7 @@ function ManageRoom(props) {
                                                                 ) => {
                                                                     onChangeFile5(
                                                                         event,
-                                                                        fileRoomEdit5.id
+                                                                        fileRoomEdit5?.id
                                                                     );
                                                                 }}
                                                             />
@@ -1327,7 +1327,11 @@ function ManageRoom(props) {
                         <Box flex={3} display="flex" flexDir={"column"}>
                             <Box display={"flex"} flexDir={"row"}>
                                 <FormControl mx={"4"}>
-                                    <FormLabel fontSize={{ base: "xs", md: "lg" }}>Price (Rp)</FormLabel>
+                                    <FormLabel
+                                        fontSize={{ base: "xs", md: "lg" }}
+                                    >
+                                        Price (Rp)
+                                    </FormLabel>
                                     <Input
                                         isRequired
                                         type="number"

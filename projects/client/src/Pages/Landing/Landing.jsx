@@ -108,15 +108,13 @@ export default function LandingNew() {
             }
         })
     };
-    console.log("checkInDate", checkInDate);
-    console.log("checkOutDate", checkOutDate);
 
     // For Browse by Property Type
     const handleSearchCategory = (category) => {
         navigate('/property/', {
             state: {
                 inputLocation: inputLocation,
-                inputCheckIn:  checkInDate ? moment(checkInDate).format().split('T')[0] : today,
+                inputCheckIn: checkInDate ? moment(checkInDate).format().split('T')[0] : today,
                 inputCheckOut: checkOutDate ? moment(checkOutDate).format().split('T')[0] : tomorrow,
                 guest: guest,
                 category: category
@@ -129,7 +127,7 @@ export default function LandingNew() {
         navigate('/property/', {
             state: {
                 inputLocation: inputLocation,
-                inputCheckIn:  checkInDate ? moment(checkInDate).format().split('T')[0] : today,
+                inputCheckIn: checkInDate ? moment(checkInDate).format().split('T')[0] : today,
                 inputCheckOut: checkOutDate ? moment(checkOutDate).format().split('T')[0] : tomorrow,
                 guest: guest,
             }
@@ -140,7 +138,6 @@ export default function LandingNew() {
         try {
             setLoading2(true);
             let response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/landing/property-recommendation`);
-            console.log("ini response dari getRecommendProperty :", response.data);
             setRecommendProperty(response.data);
         } catch (error) {
             console.log("ini error dari getRecommendProperty:", error);
@@ -149,7 +146,6 @@ export default function LandingNew() {
             setLoadingPage(false);
         }
     };
-    console.log("ini isi RecommendProperty:", recommendProperty);
 
     const printRecommendProperty = () => {
         return recommendProperty.map((val, idx) => {
@@ -244,7 +240,7 @@ export default function LandingNew() {
 
     //react-slick slider property recommendation
     const numberOfProperties = recommendProperty.length;
-    let slidesToShowValue = 5;
+    let slidesToShowValue = 6;
     if (numberOfProperties === 1) {
         slidesToShowValue = 1;
     } else if (numberOfProperties === 2) {
@@ -253,6 +249,8 @@ export default function LandingNew() {
         slidesToShowValue = 3;
     } else if (numberOfProperties === 4) {
         slidesToShowValue = 4;
+    } else if (numberOfProperties === 5) {
+        slidesToShowValue = 5;
     };
 
     const settingsRecommendation = {
@@ -262,7 +260,7 @@ export default function LandingNew() {
         initialSlide: 0,
         responsive: [
             {
-                breakpoint: 1440, 
+                breakpoint: 1440,
                 settings: {
                     slidesToShow: slidesToShowValue <= 4 ? slidesToShowValue : 4,
                     slidesToScroll: 1,
@@ -302,8 +300,6 @@ export default function LandingNew() {
                 withCredentials: true,
             });
             const cookieValue = document.cookie;
-            console.log("ini isi dari cookieValue :", cookieValue);
-            console.log("tipe data cookieValue :", typeof cookieValue);
             // Find idx of the equals sign (=) and remove substring starting (=)
             var equalsIndex = cookieValue.indexOf("=");
             var token = cookieValue.substring(equalsIndex + 1);
@@ -331,7 +327,7 @@ export default function LandingNew() {
                 <Box mb={{ base: "40px", md: "80px" }}>
                     <Flex
                         w="full"
-                        h={{ base: "80vh", sm:"125vh", lg: "100vh" }}
+                        h={{ base: "80vh", sm: "125vh", lg: "100vh" }}
                         backgroundImage={BannerImage}
                         backgroundSize="cover"
                         backgroundPosition={"center center"}
@@ -346,12 +342,12 @@ export default function LandingNew() {
                                     color={"white"}
                                     fontWeight={400}
                                     lineHeight={1.2}
-                                    mt={{base:"0", md:"4", lg:"0"}}
-                                    fontSize={{ base: "3xl", md:"4xl", lg: "55px" }}>
+                                    mt={{ base: "0", md: "4", lg: "0" }}
+                                    fontSize={{ base: "3xl", md: "4xl", lg: "55px", '2xl': "6xl" }}>
                                     Find Your Next Stay
                                 </Text>
                                 {/* SEARCH BAR */}
-                                <Box bg="white" w={{ base: "80vw", md: "50vw", lg: "80vw" }} m="30px auto" p="6px 10px 6px 25px" borderRadius="10px" py={{ base: "4", md: "3", lg: "1.5" }}>
+                                <Box bg="white" w={{ base: "80vw", md: "50vw", lg: "80vw", '2xl': "70vw" }} m="30px auto" p="6px 10px 6px 25px" borderRadius="10px" py={{ base: "4", md: "3", lg: "1.5" }}>
                                     <Flex align={{ base: "left", lg: "center" }} justify={"space-between"} flexWrap={"wrap"} flexDirection={{ base: "column", lg: "row" }}>
                                         <Box
                                             flex="1.5"
@@ -453,15 +449,16 @@ export default function LandingNew() {
                                 borderRadius="8px"
                                 color="#fff"
                                 display="inline-block"
-                                fontSize="18px"
+                                fontSize={{ base: "18px", '2xl': "xl" }}
                                 marginRight="20px"
-                                padding="6px 30px"
+                                px={{ base: "3", sm: "6" }}
+                                py={"3"}
                                 fontWeight="500"
                             >
                                 HOLIDAY SALE
                             </Box>
                             <Heading
-                                fontSize={{ base: "3xl", md: "5xl" }}
+                                fontSize={{ base: "3xl", md: "5xl", '2xl': "6xl" }}
                                 fontWeight="500"
                                 lineHeight={{ base: "4xl", md: "5.3vw" }}
                                 mt="10px"
@@ -471,13 +468,13 @@ export default function LandingNew() {
                             </Heading>
                         </Box>
                         <Box maxW={"xl"}>
-                            <Text fontSize={{ base: "sm", sm: "18px" }} mt="10px">
+                            <Text fontSize={{ base: "sm", sm: "18px", '2xl': "xl" }} mt="10px">
                                 During our exclusive holiday sale, we are thrilled to present you with an array of special offers! Take advantage of this limited-time promotion, get the best prices on properties and rooms here.
                             </Text>
                         </Box>
                     </Box>
                     {/* PROPERTY TYPE */}
-                    <Heading fontSize={{ base: "2xl", md: "4xl" }}
+                    <Heading fontSize={{ base: "2xl", md: "4xl", '2xl': "5xl" }}
                         fontWeight="700"
                         align="center"
                         textDecoration="underline"
@@ -485,7 +482,7 @@ export default function LandingNew() {
                     >
                         Browse by Property Type
                     </Heading>
-                    <Text fontWeight="700" align="center" mt="14px" fontSize={{ base: "sm", lg: "md" }}>Enjoy your stay in our fine selection of properties</Text>
+                    <Text fontWeight="700" align="center" mt="14px" fontSize={{ base: "sm", lg: "md", '2xl': "xl" }}>Enjoy your stay in our fine selection of properties</Text>
                     <Box my={{ base: "40px", md: "80px" }} px={2}>
                         <Slider {...settingsCategory} prevArrow={<FaChevronLeft color="#E2E8F0" />} nextArrow={<FaChevronRight color="#E2E8F0" />}>
                             <Box p="2">
@@ -496,7 +493,7 @@ export default function LandingNew() {
                                 >
                                     <Image src={Hotels1} _hover={{ transform: "scale(1.1)", transition: ".5s" }}
                                         alt="Hotels" w="100%" borderRadius="10px" />
-                                    <Text position="absolute" top="50%" left="50%" transform="translate(-50%,-50%)" textAlign="center" color="white" fontSize={{ base: "sm", md: "20px", lg: "20px" }} fontWeight="500">
+                                    <Text position="absolute" top="50%" left="50%" transform="translate(-50%,-50%)" textAlign="center" color="white" fontSize={{ base: "sm", md: "20px", lg: "20px", '2xl': "2xl" }} fontWeight="500">
                                         HOTELS
                                     </Text>
                                 </Box>
@@ -509,7 +506,7 @@ export default function LandingNew() {
                                 >
                                     <Image src={Apartment1} _hover={{ transform: "scale(1.1)", transition: ".5s" }}
                                         alt="Hotels" w="100%" borderRadius="10px" />
-                                    <Text position="absolute" top="50%" left="50%" transform="translate(-50%,-50%)" textAlign="center" color="white" fontSize={{ base: "sm", md: "20px", lg: "20px" }} fontWeight="500">
+                                    <Text position="absolute" top="50%" left="50%" transform="translate(-50%,-50%)" textAlign="center" color="white" fontSize={{ base: "sm", md: "20px", lg: "20px", '2xl': "2xl" }} fontWeight="500">
                                         APARTMENTS
                                     </Text>
                                 </Box>
@@ -522,7 +519,7 @@ export default function LandingNew() {
                                 >
                                     <Image src={Villas1} _hover={{ transform: "scale(1.1)", transition: ".5s" }}
                                         alt="Hotels" w="100%" borderRadius="10px" />
-                                    <Text position="absolute" top="50%" left="50%" transform="translate(-50%,-50%)" textAlign="center" color="white" fontSize={{ base: "sm", md: "20px", lg: "20px" }} fontWeight="500">
+                                    <Text position="absolute" top="50%" left="50%" transform="translate(-50%,-50%)" textAlign="center" color="white" fontSize={{ base: "sm", md: "20px", lg: "20px", '2xl': "2xl" }} fontWeight="500">
                                         VILLAS
                                     </Text>
                                 </Box>
@@ -530,7 +527,7 @@ export default function LandingNew() {
                         </Slider>
                     </Box>
                     {/* TOP DESTINATIONS */}
-                    <Heading fontSize={{ base: "2xl", md: "4xl" }}
+                    <Heading fontSize={{ base: "2xl", md: "4xl", '2xl': "5xl" }}
                         fontWeight="700"
                         align="center"
                         textDecoration="underline"
@@ -538,7 +535,7 @@ export default function LandingNew() {
                     >
                         Top Destinations
                     </Heading>
-                    <Text fontWeight="700" align="center" mt="14px" fontSize={{ base: "sm", lg: "md" }}>Discover our properties in big cities of Indonesia</Text>
+                    <Text fontWeight="700" align="center" mt="14px" fontSize={{ base: "sm", lg: "md", '2xl': "xl" }}>Discover our properties in big cities of Indonesia</Text>
                     <Box my={{ base: "40px", md: "80px" }} px={2}>
                         <Slider {...settingsDestinations} prevArrow={<FaChevronLeft color="#E2E8F0" />} nextArrow={<FaChevronRight color="#E2E8F0" />}>
                             <Box p="2">
@@ -546,7 +543,7 @@ export default function LandingNew() {
                                     onClick={() => handleSearchDestination("BALI")}
                                 >
                                     <Image src={Kuta1} borderRadius="10px" _hover={{ transform: "scale(1.1)", transition: ".5s" }} />
-                                    <Text position="absolute" top="50%" left="50%" transform="translate(-50%,-50%)" color="#fff" fontSize={{ base: "sm", md: "20px", lg: "20px" }} fontWeight="500">
+                                    <Text position="absolute" top="50%" left="50%" transform="translate(-50%,-50%)" color="#fff" fontSize={{ base: "sm", md: "20px", lg: "20px", '2xl': "2xl" }} fontWeight="500">
                                         BALI
                                     </Text>
                                 </Box>
@@ -556,7 +553,7 @@ export default function LandingNew() {
                                     onClick={() => handleSearchDestination("DKI JAKARTA")}
                                 >
                                     <Image src={Jakarta1} borderRadius="10px" _hover={{ transform: "scale(1.1)", transition: ".5s" }} />
-                                    <Text position="absolute" top="50%" left="50%" transform="translate(-50%,-50%)" color="#fff" fontSize={{ base: "sm", md: "20px", lg: "20px" }} fontWeight="500">
+                                    <Text position="absolute" top="50%" left="50%" transform="translate(-50%,-50%)" color="#fff" fontSize={{ base: "sm", md: "20px", lg: "20px", '2xl': "2xl" }} fontWeight="500">
                                         JAKARTA
                                     </Text>
                                 </Box>
@@ -566,7 +563,7 @@ export default function LandingNew() {
                                     onClick={() => handleSearchDestination("JAWA BARAT")}
                                 >
                                     <Image src={Uluwatu1} borderRadius="10px" _hover={{ transform: "scale(1.1)", transition: ".5s" }} />
-                                    <Text position="absolute" top="50%" left="50%" transform="translate(-50%,-50%)" color="#fff" fontSize={{ base: "sm", md: "20px", lg: "20px" }} fontWeight="500">
+                                    <Text position="absolute" top="50%" left="50%" transform="translate(-50%,-50%)" color="#fff" fontSize={{ base: "sm", md: "20px", lg: "20px", '2xl': "2xl" }} fontWeight="500">
                                         BANDUNG
                                     </Text>
                                 </Box>
@@ -576,7 +573,7 @@ export default function LandingNew() {
                                     onClick={() => handleSearchDestination("BANTEN")}
                                 >
                                     <Image src={Ubud1} borderRadius="10px" _hover={{ transform: "scale(1.1)", transition: ".5s" }} />
-                                    <Text position="absolute" top="50%" left="50%" transform="translate(-50%,-50%)" color="#fff" fontSize={{ base: "sm", md: "20px", lg: "20px" }} fontWeight="500">
+                                    <Text position="absolute" top="50%" left="50%" transform="translate(-50%,-50%)" color="#fff" fontSize={{ base: "sm", md: "20px", lg: "20px", '2xl': "2xl" }} fontWeight="500">
                                         TANGERANG
                                     </Text>
                                 </Box>
@@ -586,7 +583,7 @@ export default function LandingNew() {
                                     onClick={() => handleSearchDestination("DI YOGYAKARTA")}
                                 >
                                     <Image src={Yogyakarta1} borderRadius="10px" _hover={{ transform: "scale(1.1)", transition: ".5s" }} />
-                                    <Text position="absolute" top="50%" left="50%" transform="translate(-50%,-50%)" color="#fff" fontSize={{ base: "sm", md: "20px", lg: "20px" }} fontWeight="500">
+                                    <Text position="absolute" top="50%" left="50%" transform="translate(-50%,-50%)" color="#fff" fontSize={{ base: "sm", md: "20px", lg: "20px", '2xl': "2xl" }} fontWeight="500">
                                         YOGYAKARTA
                                     </Text>
                                 </Box>
@@ -606,7 +603,7 @@ export default function LandingNew() {
                     >
                         <Box alignItems="center">
                             <Heading
-                                fontSize={{ base: "3xl", md: "5xl" }}
+                                fontSize={{ base: "3xl", md: "5xl", '2xl': "6xl" }}
                                 fontWeight="500"
                                 lineHeight={{ base: "4xl", md: "5.3vw" }}
                                 mt="10px"
@@ -622,10 +619,11 @@ export default function LandingNew() {
                             bg="#D3212D"
                             borderRadius="8px"
                             color="#fff"
-                            fontSize={{ base: "sm", sm: "18px" }}
+                            fontSize={{ base: "sm", sm: "18px", '2xl': "xl" }}
                             marginTop="30px"
                             _hover={{ bg: "#fff", color: "#D3212D" }}
-                            p={{ base: "3", sm: "6" }}
+                            px={{ base: "3", sm: "6" }}
+                            py={{ base: "3", sm: "6" }}
                             textAlign="center"
                             onClick={() => navigate("/register/tenant")}
                         >
@@ -635,7 +633,7 @@ export default function LandingNew() {
                         </Button>
                     </Box>
                     {/* PROPERTY RECOMMENDATIONS */}
-                    <Heading fontSize={{ base: "2xl", md: "4xl" }}
+                    <Heading fontSize={{ base: "2xl", md: "4xl", '2xl': "5xl" }}
                         fontWeight="700"
                         align="center"
                         textDecoration="underline"
@@ -643,7 +641,7 @@ export default function LandingNew() {
                     >
                         Recommended for You
                     </Heading>
-                    <Text fontWeight="700" align="center" mt="14px" fontSize={{ base: "sm", lg: "md" }}>Discover our properties with the best ratings</Text>
+                    <Text fontWeight="700" align="center" mt="14px" fontSize={{ base: "sm", lg: "md", '2xl': "xl" }}>Discover our properties with the best ratings</Text>
                     <Box my={{ base: "40px", md: "80px" }} px={2}>
                         {
                             loading2 ? (
@@ -665,7 +663,8 @@ export default function LandingNew() {
                                 color="#D3212D"
                                 borderColor="#D3212D"
                                 _hover={{ bg: "#D3212D", color: "white" }}
-                                p={{ base: "3", sm: "6" }}
+                                px={{ base: "3", sm: "6" }}
+                                py={{ base: "3", sm: "6" }}
                                 textAlign="center"
                                 onClick={handleSearch}
                             >

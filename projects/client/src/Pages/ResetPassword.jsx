@@ -79,8 +79,6 @@ export default function ResetPassword() {
         }
     }
 
-    console.log("ini isi params :", params); //testing purposes
-
     const formik = useFormik({
         initialValues: {
             newPassword: "",

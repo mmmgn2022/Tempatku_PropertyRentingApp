@@ -9,19 +9,24 @@ module.exports = {
         try {
             const { start, end } = req.query;
 
-            let get = await model.order.sum("price", {
+            let get = await model.order.sum("order.price", {
                 where: {
-                    createdAt: { [sequelize.Op.between]: [start, end] },
+                    createdAt: {
+                        [sequelize.Op.gte]: start,
+                        [sequelize.Op.lte]: end,
+                    },
                 },
                 include: [
                     {
                         model: model.transaction,
+                        required: true,
                         where: {
                             transaction_statusId: 3,
                         },
                     },
                     {
                         model: model.room,
+                        required: true,
                         include: [
                             {
                                 model: model.property,
@@ -33,6 +38,7 @@ module.exports = {
                     },
                 ],
             });
+            console.log(get);
 
             res.status(200).send({
                 success: true,
@@ -61,7 +67,10 @@ module.exports = {
 
             let chart = await model.order.findAll({
                 attributes: [
-                    [sequelize.fn("sum", sequelize.col("price")), "price"],
+                    [
+                        sequelize.fn("sum", sequelize.col("order.price")),
+                        "totalPrice",
+                    ],
                     "createdAt",
                 ],
 
@@ -75,12 +84,14 @@ module.exports = {
                 include: [
                     {
                         model: model.transaction,
+                        required: true,
                         where: {
                             transaction_statusId: 3,
                         },
                     },
                     {
                         model: model.room,
+                        required: true,
                         include: [
                             {
                                 model: model.property,
@@ -102,7 +113,7 @@ module.exports = {
                         options
                     )
                 );
-                totalArr.push(chart[i].price);
+                totalArr.push(chart[i].dataValues.totalPrice);
             }
 
             res.status(200).send({
@@ -139,7 +150,7 @@ module.exports = {
                 attributes: [
                     [
                         sequelize.fn("sum", sequelize.col("order.price")),
-                        "price",
+                        "totalPrice",
                     ],
                     "createdAt",
                 ],
@@ -183,7 +194,7 @@ module.exports = {
                         options
                     )
                 );
-                totalArr.push(chart[i].price);
+                totalArr.push(chart[i].dataValues.totalPrice);
             }
 
             res.status(200).send({

@@ -37,40 +37,48 @@ export default function OrderListCardTenant(props) {
     const days = diff / 86400000;
 
     const updateTransactionStatus = async () => {
-        setLoadingButton(true)
-        let update = await axios.patch(
-            `${process.env.REACT_APP_API_BASE_URL}/transaction/confirm`,
-            {
-                transaction_statusId: 3,
-                uuid: props.uuidTransaction,
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
+        try {
+            setLoadingButton(true)
+            let update = await axios.patch(
+                `${process.env.REACT_APP_API_BASE_URL}/transaction/confirm`,
+                {
+                    transaction_statusId: 3,
+                    uuid: props.uuidTransaction,
                 },
-            }
-        );
-        props.getActionsNeeded();
-        props.getSummary();
-        setLoadingButton(false)
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            props.getActionsNeeded();
+            props.getSummary();
+            setLoadingButton(false)
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const rejectTransaction = async () => {
-        setLoadingButton(true)
-        let update = await axios.patch(
-            `${process.env.REACT_APP_API_BASE_URL}/transaction/reject`,
-            {
-                uuid: props.uuidTransaction,
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
+        try {
+            setLoadingButton(true)
+            let update = await axios.patch(
+                `${process.env.REACT_APP_API_BASE_URL}/transaction/reject`,
+                {
+                    uuid: props.uuidTransaction,
                 },
-            }
-        );
-        props.getActionsNeeded();
-        props.getSummary();
-        setLoadingButton(false)
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            props.getActionsNeeded();
+            props.getSummary();
+            setLoadingButton(false)
+        } catch (error) {
+            console.log(error);
+        }
 
     };
 

@@ -5,8 +5,6 @@ module.exports = {
         expiresIn: exp
     }),
     readToken: (req, res, next) => {
-        console.log("ini dari helper readToken req.token:", req.token);
-        console.log("cek env token",process.env.JWT_SECRET_TOKEN);
         jwt.verify(req.token, process.env.JWT_SECRET_TOKEN, (error, decrypt) => {
             if(error){ 
                 console.log(error);
