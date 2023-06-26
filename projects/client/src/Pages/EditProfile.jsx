@@ -26,6 +26,7 @@ export default function EditProfile(props) {
     const currentGender = useSelector((state) => state.authReducer.gender);
     const currentBirth = useSelector((state) => state.authReducer.birth);
     const currentProfileImage = useSelector((state) => state.authReducer.image_profile);
+    const currentAccountNumber = useSelector((state) => state.authReducer.account_number);
     const role = useSelector((state) => state.authReducer.role);
     const isVerified = useSelector((state) => state.authReducer.isVerified);
     const [gender, setGender] = useState(currentGender);
@@ -63,6 +64,10 @@ export default function EditProfile(props) {
                 formik.setErrors({ email: "Email is a required field" });
                 return;
             }
+            if (formik.values.accountNumber.trim() === "") {
+                formik.setErrors({ accountNumber: "Account number is a required field" });
+                return;
+            }
             if (!formik.isValid) {
                 return;
             }
@@ -72,6 +77,7 @@ export default function EditProfile(props) {
                     email: formik.values.email,
                     gender: gender,
                     birth: birth,
+                    account_number: formik.values.accountNumber,
                 },
                 {
                     headers: {
@@ -152,6 +158,7 @@ export default function EditProfile(props) {
             email: currentEmail || "",
             gender: currentGender || "",
             birth: currentBirth || "",
+            accountNumber: currentAccountNumber || "",
         },
         onSubmit: onBtnEditProfile,
         validationSchema: yup.object().shape({
@@ -190,7 +197,13 @@ export default function EditProfile(props) {
                         return birthdate <= minimumAgeDate;
                     }
                 )
-                .max(new Date(), "Birthdate cannot past today.")
+                .max(new Date(), "Birthdate cannot past today."),
+            accountNumber: yup
+                .string()
+                .required("Account number is a required field")
+                .matches(/^\d+$/, "Account number must contain only digits")
+                .min(10, "Account number must be at least 10 characters")
+                .max(20, "Account number must not exceed 20 characters"),
         })
     });
 
@@ -494,6 +507,24 @@ export default function EditProfile(props) {
                             />
                             <FormErrorMessage fontSize="xs" style={{ position: "absolute", top: "100%", marginTop: "0.30rem" }}>{formik.errors.birth}</FormErrorMessage>
                         </FormControl>
+                        {/* ACCOUNT NUMBER */}
+                        {
+                            role == "Tenant" ? (
+                                <FormControl id="accountNumber" isInvalid={formik.errors.accountNumber}>
+                                <FormLabel>Account Number</FormLabel>
+                                <Input
+                                    placeholder={currentAccountNumber ? currentAccountNumber : "Input your account number"}
+                                    _placeholder={{ color: "gray.800" }}
+                                    type="text"
+                                    value={formik.values.accountNumber}
+                                    onChange={handleForm}
+                                    name="accountNumber"
+                                />
+                                <FormErrorMessage fontSize="xs" style={{ position: "absolute", top: "100%", marginTop: "0.30rem" }}>{formik.errors.accountNumber}</FormErrorMessage>
+                            </FormControl>
+                            ) :
+                            null
+                        }
                         {
                             // Tenant
                             role == "Tenant" ? (

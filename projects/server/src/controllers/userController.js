@@ -154,7 +154,8 @@ module.exports = {
             );
             let { id, uuid, email, phone, isSuspended, attempts, isVerified } =
               getuser[0].dataValues;
-            let { name, birth, gender, image_profile } = getuser[0].user_detail;
+            let { name, birth, gender, image_profile, account_number } =
+              getuser[0].user_detail;
             let role = getuser[0].dataValues.role.role;
             // generate token
             let token = createToken({ id, role, isSuspended }, "24h");
@@ -173,6 +174,7 @@ module.exports = {
               gender,
               birth,
               uuid,
+              account_number,
             });
           } else {
             //jika salah passwordnya attempt + 1 sampe 5 kali nanti akun suspended
@@ -238,7 +240,8 @@ module.exports = {
       });
       let { id, uuid, email, phone, isSuspended, isVerified } =
         getuser[0].dataValues;
-      let { name, birth, gender, image_profile } = getuser[0].user_detail;
+      let { name, birth, gender, image_profile, account_number } =
+        getuser[0].user_detail;
       let role = getuser[0].dataValues.role.role;
       // generate token
       let token = createToken({ id, role, isSuspended }, "24h");
@@ -256,6 +259,7 @@ module.exports = {
         gender,
         birth,
         uuid,
+        account_number,
       });
     } catch (error) {
       console.log(error);
@@ -713,7 +717,7 @@ module.exports = {
   //10. EDIT PROFILE
   editProfile: async (req, res, next) => {
     try {
-      const { name, email, birth, gender } = req.body;
+      const { name, email, birth, gender, account_number } = req.body;
       if (name || email || birth || gender) {
         await model.user.update(
           { email },
@@ -724,7 +728,7 @@ module.exports = {
           }
         );
         await model.user_detail.update(
-          { name, birth, gender },
+          { name, birth, gender, account_number },
           {
             where: {
               userId: req.decrypt.id,
